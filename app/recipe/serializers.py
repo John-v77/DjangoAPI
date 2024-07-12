@@ -10,6 +10,7 @@ from core.models import (
     Ingredient
 )
 
+
 class IngredientSerializer(serializers.ModelSerializer):
     """Serializer for ingredients."""
 
@@ -27,6 +28,7 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
         read_only_fields = ['id']
 
+
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for recipes."""
     tags = TagSerializer(many=True, required=False)
@@ -39,7 +41,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             'link', 'tags', 'ingredients',
             ]
         read_only_fields = ['id']
-
 
     def __get_or_create_tags(self, tags, recipe):
         """Handle getting or creating tags as needed."""
