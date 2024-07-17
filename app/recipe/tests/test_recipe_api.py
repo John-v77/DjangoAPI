@@ -46,7 +46,7 @@ def create_recipe(user, **params):
         'time_minutes': 22,
         'price': Decimal('5.25'),
         'description': 'Sample description',
-        'link': 'http//example.com/recipe.pdf',
+        'link': 'http://example.com/recipe.pdf',
 
     }
     defaults.update(params)
@@ -60,7 +60,7 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-class PublicRecipeAPITest(TestCase):
+class PublicRecipeAPITests(TestCase):
     """Test unauthenticated API requests."""
 
     def setUp(self):
@@ -400,17 +400,16 @@ class PrivateRecipeApiTests(TestCase):
         r2.tags.add(tag2)
         r3 = create_recipe(user=self.user, title='FIsh and chips')
 
-
         params = {'tags': f'{tag1.id},{tag2.id}'}
         res = self.client.get(RECIPE_URL, params)
 
-        s1= RecipeSerializer(r1)
-        s2= RecipeSerializer(r2)
-        s3= RecipeSerializer(r3)
+        s1 = RecipeSerializer(r1)
+        s2 = RecipeSerializer(r2)
+        s3 = RecipeSerializer(r3)
 
         self.assertIn(s1.data, res.data)
         self.assertIn(s2.data, res.data)
-        self.assertIn(s3.data, res.data)
+        self.assertNotIn(s3.data, res.data)
 
     def test_filter_by_ingredients(self):
         """Test filtering recipes by ingredients."""
@@ -431,6 +430,7 @@ class PrivateRecipeApiTests(TestCase):
         self.assertIn(s1.data, res.data)
         self.assertIn(s2.data, res.data)
         self.assertNotIn(s3.data, res.data)
+
 
 class ImageUploadTests(TestCase):
     """Tests for the image upload API."""

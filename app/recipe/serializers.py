@@ -94,7 +94,6 @@ class RecipeDetailSerializer(RecipeSerializer):
     """Serializer for recipe detail view."""
 
     class Meta(RecipeSerializer.Meta):
-        """Retrieve recipes for authenticated user."""
         fields = RecipeSerializer.Meta.fields + ['description']
 
 
