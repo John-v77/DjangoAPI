@@ -3,7 +3,7 @@ version: "3.9"
 services:
   app:
     build:
-      context:
+      context: .
     restart: always
     volumes:
       - static-data:/vol/web
@@ -24,8 +24,8 @@ services:
       - postgres-data:/var/lib/postgresql/data
     entrypoint:
       - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_DB=${DB_USER}
-      - POSTGRES_DB=${DB_PASS}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
 
   proxy:
     build:
@@ -34,7 +34,7 @@ services:
     depends_on:
       - app
     ports:
-      - 80:8000
+      - 8000:8000
     volumes:
       - static-data:/vol/static
 
